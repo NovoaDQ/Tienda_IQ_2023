@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>TechShop</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>Datos de Cliente</h1>
+        </br>
+        <a th:href="@{/}">Regresar</a>
+        </br>
+        </br>
+        <form th:action="@{/guardarCliente}"
+              method="POST"
+              th:object="${cliente">
+            <input type="hidden" name="idCliente" th:field="*{idCliente}" />
+            <label for="nombre">Nombre:</label><br/>
+            <input type="text" name="nombre" th:field="*{nombre}" />            
+            <label for="nombre">Appelidos:</label><br/>
+            <input type="text" name="apellidos" th:field="*{apellidos}" />            
+            <label for="nombre">Correo:</label><br/>
+            <input type="email" name="correo" th:field="*{correo}" />            
+            <label for="nombre">Telefono:</label><br/>
+            <input type="tel" name="telefono" th:field="*{telefono}" />    
+            <input type="submit" name="Guardar" value="Guardar" />
+        </form>
+        <footer th:replace="layout/plantilla :: footer" />
+    </body>
+</html>

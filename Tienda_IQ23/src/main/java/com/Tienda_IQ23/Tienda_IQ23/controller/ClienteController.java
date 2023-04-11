@@ -2,57 +2,47 @@ package com.Tienda_IQ23.Tienda_IQ23.controller;
 
 import com.Tienda_IQ23.Tienda_IQ23.domain.Cliente;
 import com.Tienda_IQ23.Tienda_IQ23.service.ClienteService;
-import java.util.Arrays;
-import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-/**
- *
- * @author diego
- */
-@Slf4j
 @Controller
-public class IndexController {
-
+public class ClienteController {
+    
     @Autowired
     ClienteService clienteService;
-
-    @GetMapping("/")
-    public String inicio(Model model) {
-        log.info("Ahora utilizando MVC");
-        
+    
+    @GetMapping("/cliente/listado")
+    public String inicio(Model model) {        
         var clientes = clienteService.getClientes();
         model.addAttribute("Clientes", clientes);
 
-        return "index";
+        return "/clientes/listado";
     }
     
-    @GetMapping("/nuevoCliente")
+    @GetMapping("/cliente/nuevo")
     public String nuevoCliente(Cliente cliente){
-        return "modificarCliente";
+        return "/cliente/modificar";
     }
-    @PostMapping("/guardarcliente")
+    @PostMapping("/cliente/guardar")
     public String guardarCliente (Cliente cliente) {
         clienteService.save(cliente);
-        return "redirect:/";
+        return "redirect:/cliente/listado";
     }
     
-    @GetMapping ("/modificarCliente/{id:Cliente}")
+    @GetMapping ("/cliente/modificar/{id:Cliente}")
     public String modificarCliente(Cliente cliente, Model model){
-      cliente = (Cliente) clienteService.getCliente(cliente);
+      cliente = clienteService.getCliente(cliente);
       model.addAttribute("cliente", cliente);
-      return "modificarCliente";
+      return "/cliente/modificar";
     }
     
-    @GetMapping("/eliminarCliente/{id:Cliente}")
+    @GetMapping("/cliente/eliminar/{id:Cliente}")
     public String eliminarCliente(Cliente cliente){
         clienteService.delete(cliente);
-        return "redirect:/";
+        return "redirect:/cliente/listado";
     }
-
+    
 }
